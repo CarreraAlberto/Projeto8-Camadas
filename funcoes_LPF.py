@@ -1,4 +1,7 @@
 from scipy import signal as sg
+import sounddevice as sd
+import numpy as np
+import soundfile as sf
 
 def filtro(y, samplerate, cutoff_hz):
   # https://scipy.github.io/old-wiki/pages/Cookbook/FIRFilter.html
@@ -21,3 +24,23 @@ def LPF(signal, cutoff_hz, fs):
   N , beta = sg.kaiserord(ripple_db, width)
   taps = sg.firwin(N, cutoff_hz/nyq_rate, window=('kaiser', beta))
   return( sg.lfilter(taps, 1.0, signal))
+
+# Começo do programa principal
+fs = 44100
+
+print("Lendo o áudio")
+sound, sampletime = sf.read('audio.wav')
+print("Áudio lido")
+print()
+
+print("Filtrando o áudio")
+soundFiltrado = LPF(sound, 4000, fs)
+print("Áudio filtrado")
+
+print("Tocando o áudio filtrado")
+sd.play(soundFiltrado, fs)
+sd.wait()
+print("Fim da reprodução")
+
+
+
