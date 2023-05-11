@@ -48,41 +48,39 @@ def plotFFT(signal, fs):
 fs = 44100
 
 print("Lendo o áudio")
-sound, sampletime = sf.read('audio.wav')
+sound, sampletime = sf.read('sinalModulado.wav')
+
 print("Áudio lido")
 print()
 
-print("Extraindo da lista")
-audioClear = sound[:,0]
-print("Extraído")
+print("Fazendo FFT do áudio")
+plotFFT(sound, fs)
+print("FFT feita")
 print()
 
-print("Filtrando o áudio")
-soundFiltrado = LPF(audioClear, 4000, fs)
-print("Áudio filtrado")
+# Demodulando o sinal
+print("Demodulando o sinal")
+demodulado = LPF(sound, 4000, fs)
+print("Sinal demodulado")
 print()
 
-print("Tocando o áudio filtrado")
-sd.play(soundFiltrado, fs)
+# Filtrando o sinal
+print("Filtrando o sinal")
+filtrado = LPF(demodulado, 4000, fs)
+print("Sinal filtrado")
+print()
+
+# Tocar o sinal
+print("Tocando o sinal")
+sd.play(filtrado, fs)
 sd.wait()
-print("Fim da reprodução")
+print("Sinal tocado")
 print()
-
-# Calculando a FFT
-print("Calculando a FFT")
-x,y = calcFFT(soundFiltrado, fs)
-print("FFT calculada")
-print()
-
-# Plotando a FFT
-print("Plotando a FFT")
-plotFFT(y, fs)
-print("FFT plotada")
-print()
-
-
-
 
 
 
 plt.show()
+
+
+
+
