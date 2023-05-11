@@ -33,8 +33,11 @@ sound, sampletime = sf.read('audio.wav')
 print("Áudio lido")
 print()
 
+audioClear = sound[:,0]
+print(audioClear)
+
 print("Filtrando o áudio")
-soundFiltrado = LPF(sound, 4000, fs)
+soundFiltrado = LPF(audioClear, 4000, fs)
 print("Áudio filtrado")
 
 print("Tocando o áudio filtrado")
