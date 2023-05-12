@@ -41,7 +41,13 @@ def plotFFT(signal, fs):
     x,y = calcFFT(signal, fs)
     plt.figure()
     plt.plot(x, np.abs(y))
-    plt.title('Fourier')
+    plt.title('Fourier (antes da modulacao)')
+
+def plotFFT1(signal, fs):
+    x,y = calcFFT(signal, fs)
+    plt.figure()
+    plt.plot(x, np.abs(y))
+    plt.title('Fourier (depois da modulacao)')
 
 
 # Começo do programa principal
@@ -54,6 +60,7 @@ print()
 
 print("Extraindo da lista")
 audioClear = sound[:,0]
+audioClear = audioClear/np.max(np.abs(audioClear))
 print("Extraído")
 print()
 
@@ -62,21 +69,31 @@ soundFiltrado = LPF(audioClear, 4000, fs)
 print("Áudio filtrado")
 print()
 
+# Plot do sinal de audio original normalizado pelo tempo
+print("Plotando o sinal de audio original normalizado pelo tempo")
+plt.figure()
+plt.plot(sound)
+plt.title('Sinal de audio original normalizado pelo tempo')
+print("Plotado")
+print()
+
+# Plot do sinal de audio filtrado normalizado pelo tempo
+print("Plotando o sinal de audio filtrado normalizado pelo tempo")
+plt.figure()
+plt.plot(soundFiltrado)
+plt.title('Sinal de audio filtrado normalizado pelo tempo')
+print("Plotado")
+print()
+
 print("Tocando o áudio filtrado")
 sd.play(soundFiltrado, fs)
 sd.wait()
 print("Fim da reprodução")
 print()
 
-# Calculando a FFT
-print("Calculando a FFT")
-x,y = calcFFT(soundFiltrado, fs)
-print("FFT calculada")
-print()
-
 # Plotando a FFT
 print("Plotando a FFT")
-plotFFT(y, fs)
+plotFFT(soundFiltrado, fs)
 print("FFT plotada")
 print()
 
@@ -102,5 +119,18 @@ sd.wait()
 print("Fim da reprodução")
 print()
 
+# Plot do sinal modulado pelo tempo
+print("Plotando o sinal modulado pelo tempo")
+plt.figure()
+plt.plot(sinalModulado)
+plt.title('Sinal modulado pelo tempo')
+print("Plotado")
+print()
+
+# Plotando a FFT do sinal modulado
+print("Plotando a FFT do sinal modulado")
+plotFFT1(sinalModulado, fs)
+print("FFT plotada")
+print()
 
 plt.show()

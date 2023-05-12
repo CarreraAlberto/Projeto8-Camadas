@@ -49,7 +49,7 @@ fs = 44100
 
 print("Lendo o áudio")
 sound, sampletime = sf.read('sinalModulado.wav')
-
+# audioClear = sound[:,0]
 print("Áudio lido")
 print()
 
@@ -58,16 +58,31 @@ plotFFT(sound, fs)
 print("FFT feita")
 print()
 
+# Tocando o sinal
+print("Tocando o sinal")   
+sd.play(sound, fs)
+sd.wait()
+print("Sinal tocado")
+print()
+
 # Demodulando o sinal
 print("Demodulando o sinal")
-demodulado = LPF(sound, 4000, fs)
+t = np.linspace(0, sampletime, len(sound))
+portadora = np.sin(2*np.pi*14000*t)
+demodulado = sound * portadora
 print("Sinal demodulado")
 print()
 
 # Filtrando o sinal
 print("Filtrando o sinal")
-filtrado = LPF(demodulado, 4000, fs)
+filtrado = filtro(demodulado, fs, 4000)
 print("Sinal filtrado")
+print()
+
+# Fazendo FFT do sinal
+print("Fazendo FFT do sinal")
+plotFFT(filtrado, fs)
+print("FFT feita")
 print()
 
 # Tocar o sinal
@@ -80,7 +95,3 @@ print()
 
 
 plt.show()
-
-
-
-
