@@ -53,6 +53,15 @@ sound, sampletime = sf.read('sinalModulado.wav')
 print("Áudio lido")
 print()
 
+# Plotando o áudio
+print("Plotando o áudio")
+plt.figure()
+plt.plot(sound)
+plt.title('Áudio')
+print("Áudio plotado")
+print()
+
+# Plotando o FFT do áudio
 print("Fazendo FFT do áudio")
 plotFFT(sound, fs)
 print("FFT feita")
@@ -73,6 +82,20 @@ demodulado = sound * portadora
 print("Sinal demodulado")
 print()
 
+# Plotando o sinal demodulado
+print("Plotando o sinal demodulado")
+plt.figure()
+plt.plot(demodulado)
+plt.title('Sinal demodulado')
+print("Sinal demodulado plotado")
+print()
+
+# Plotando o FFT do sinal demodulado
+print("Fazendo FFT do sinal demodulado")
+plotFFT(demodulado, fs)
+print("FFT feita")
+print()
+
 # Filtrando o sinal
 print("Filtrando o sinal")
 filtrado = filtro(demodulado, fs, 4000)
@@ -91,7 +114,5 @@ sd.play(filtrado, fs)
 sd.wait()
 print("Sinal tocado")
 print()
-
-
 
 plt.show()
